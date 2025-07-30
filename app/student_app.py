@@ -12,6 +12,8 @@ db_config = {
     'port': int(os.environ.get("DB_PORT", 3306))
 }
 
+DB_NAME = db_config['database']
+
 @app.route("/")
 def home():
     return render_template("index.html")
