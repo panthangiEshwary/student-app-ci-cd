@@ -11,17 +11,23 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 # Install system dependencies
 RUN apt-get update && apt-get install -y gcc
 
+# Install dependencies
+RUN pip install flask mysql-connector-python
+
 # Copy dependencies file and install them
 COPY app/requirements.txt .
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
-# Copy the application code
-COPY student_app.py .
+# Copy contents of the app folder
+COPY app/student_app.py .
+COPY app/templates/ templates/
+
+ENV FLASK_APP=student_app.py
 
 # Create and copy HTML files into the templates directory
 RUN mkdir -p templates
-COPY  index.html templates/
-COPY  students.html templates/
+COPY app/templates/index.html templates/
+COPY app/templates/students.html templates/
 
 # Expose the port the app will run on
 EXPOSE 8000
