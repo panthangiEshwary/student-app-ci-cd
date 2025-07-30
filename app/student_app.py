@@ -21,6 +21,28 @@ def home():
 def student_page():
     return render_template("students.html")
 
+# Ensure the table exists
+def init_db():
+    try:
+        conn = mysql.connector.connect(**db_config)
+        cur = conn.cursor()
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS students (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(255) NOT NULL,
+                email VARCHAR(255) NOT NULL,
+                course VARCHAR(255) NOT NULL
+            )
+        """)
+        conn.commit()
+        conn.close()
+        print("Database table initialized.")
+    except Exception as e:
+        print(f"Error initializing database: {e}")
+
+# Call it once when the app starts
+init_db()
+
 @app.route("/add_student", methods=["POST"])
 def add_student():
     try:
