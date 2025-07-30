@@ -5,11 +5,11 @@ import os
 app = Flask(__name__)
 
 db_config = {
-    'host': os.environ.get("DB_HOST"),
+    'host': os.environ.get("DB_HOST"),       # just hostname, no port
+    'port': int(os.environ.get("DB_PORT", 3306)),  # specify port separately
     'user': os.environ.get("DB_USER"),
     'password': os.environ.get("DB_PASSWORD"),
-    'database': os.environ.get("DB_NAME"),
-    'port': int(os.environ.get("DB_PORT", 3306))
+    'database': os.environ.get("DB_NAME")
 }
 
 @app.route("/")
