@@ -19,7 +19,7 @@ variable "my_ip_cidr" {
 variable "ecs_cluster_name" {
   description = "The name of the ECS cluster"
   type        = string
-  default     = "StudentApp"
+  default     = "student-app-cluster"
 }
 
 variable "db_master_username" {
