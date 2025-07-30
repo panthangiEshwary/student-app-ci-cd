@@ -46,7 +46,7 @@
     </div>
 
     <script>
-document.getElementById("studentForm").addEventListener("submit", async function (e) {
+         document.getElementById("studentForm").addEventListener("submit", async function (e) {
     e.preventDefault();
     const name = document.getElementById("name").value;
     const email = document.getElementById("email").value;
@@ -59,17 +59,19 @@ document.getElementById("studentForm").addEventListener("submit", async function
             body: JSON.stringify({ name, email, course })
         });
 
+        const data = await response.json();
+
         if (response.ok) {
             alert("Student added!");
             this.reset();
         } else {
-            alert("Failed to add student. Please try again.");
+            alert("Failed to add student: " + (data.error || "Unknown error"));
         }
-    } catch (error) {
+    } catch (err) {
         alert("Error connecting to server.");
-        console.error("Fetch error:", error);
+        console.error(err);
     }
-});
+  });
 </script>
 </body>
 </html>

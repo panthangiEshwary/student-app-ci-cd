@@ -33,6 +33,7 @@ def add_student():
         conn.close()
         return jsonify({"message": "Student added"}), 201
     except Exception as e:
+        print("Error while adding student:", e)
         return jsonify({"error": str(e)}), 500
 
 @app.route("/students", methods=["GET"])
