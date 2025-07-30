@@ -56,11 +56,12 @@ def initialize_database():
 @app.route("/add_student", methods=["POST"])
 def add_student():
     data = request.get_json()
+    print("Received data:", data)
     if not data:
         return jsonify({"error": "No data received"}), 400
 
     try:
-        conn = mysql.connector.connect(database=DB_NAME, **db_config)
+        conn = mysql.connector.connect(**db_config)
         cur = conn.cursor()
         cur.execute("INSERT INTO students (name, email, course) VALUES (%s, %s, %s)",
                     (data['name'], data['email'], data['course']))
