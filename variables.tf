@@ -38,9 +38,5 @@ variable "db_master_password" {
 variable "key_pair_name" {
   description = "Name of the EC2 Key Pair for SSH access"
   type        = string
-<<<<<<< HEAD
-  default     = "N.V"
-=======
   default     = "eshawary"
->>>>>>> 8a93b39 (Initial commit)
 }
