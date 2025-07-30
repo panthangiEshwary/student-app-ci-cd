@@ -1,72 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add Student</title>
-    <style>
-        body {
-            font-family: Arial;
-            background: #f4f4f4;
-            padding: 30px;
-        }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            max-width: 600px;
-            margin: auto;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h1 { text-align: center; }
-        form { display: flex; flex-direction: column; gap: 15px; }
-        input, button {
-            padding: 10px;
-            font-size: 16px;
-        }
-        a {
-            text-align: center;
-            display: block;
-            margin-top: 20px;
-            color: #007bff;
-            text-decoration: none;
-        }
-        a:hover { text-decoration: underline; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Add Student</h1>
-        <form id="studentForm">
-            <input type="text" id="name" placeholder="Name" required>
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="text" id="course" placeholder="Course" required>
-            <button type="submit">Submit</button>
-        </form>
-        <a href="students.html">View All Students</a>
-    </div>
+from flask import Flask, request, jsonify
+import mysql.connector
+import os
 
-    <script>
-       document.getElementById("studentForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const course = document.getElementById("course").value;
+app = Flask(__name__)
 
-    try {
-        const response = await fetch("/add_student", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, email, course })
-        });
+db_config = {
+    'host': os.environ.get("DB_HOST"),
+    'user': os.environ.get("DB_USER"),
+    'password': os.environ.get("DB_PASSWORD"),
+    'database': os.environ.get("DB_NAME"),
+    'port': int(os.environ.get("DB_PORT", 3306))
+}
 
-        if (!response.ok) throw new Error('Failed to add student');
-        
-        alert("Student added!");
-        document.getElementById("studentForm").reset();
-    } catch (error) {
-        alert(`Error: ${error.message}`);
-    }
-});
-    </script>
-</body>
-</html>
+@app.route("/add_student", methods=["POST"])
+def add_student():
+    data = request.get_json()
+    print("Received data:", data)
+    if not data:
+        return jsonify({"error": "No data received"}), 400
+
+    try:
+        conn = mysql.connector.connect(**db_config)
+        cur = conn.cursor()
+        cur.execute("INSERT INTO students (name, email, course) VALUES (%s, %s, %s)",
+                    (data['name'], data['email'], data['course']))
+        conn.commit()
+        return jsonify({"message": "Student added successfully"}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        if conn.is_connected():
+            cur.close()
+            conn.close()
+
+@app.route("/")
+def home():
+    return "Student App is running", 200
