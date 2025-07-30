@@ -42,25 +42,34 @@
             <input type="text" id="course" placeholder="Course" required>
             <button type="submit">Submit</button>
         </form>
-        <a href="/students.html">View All Students</a>
+        <a href="students.html">View All Students</a>
     </div>
 
     <script>
-        document.getElementById("studentForm").addEventListener("submit", async function (e) {
-            e.preventDefault();
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const course = document.getElementById("course").value;
+document.getElementById("studentForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const course = document.getElementById("course").value;
 
-            await fetch("/add_student", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, email, course })
-            });
-
-            alert("Student added!");
-            document.getElementById("studentForm").reset();
+    try {
+        const response = await fetch("/add_student", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, course })
         });
-    </script>
+
+        if (response.ok) {
+            alert("Student added!");
+            this.reset();
+        } else {
+            alert("Failed to add student. Please try again.");
+        }
+    } catch (error) {
+        alert("Error connecting to server.");
+        console.error("Fetch error:", error);
+    }
+});
+</script>
 </body>
 </html>
