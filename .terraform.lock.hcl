@@ -4,7 +4,10 @@
 provider "registry.terraform.io/hashicorp/aws" {
   version = "6.6.0"
   hashes = [
+<<<<<<< HEAD
     "h1:5T0EBY12OWeX0fRvgkWA5HaEAqu6JfHr2bk2RbLa8Rs=",
+=======
+>>>>>>> 8a93b39 (Initial commit)
     "h1:wnZaKRg1V3sTIZHqjAtd6yfCBaGKpt0JTcQEDBfMxXs=",
     "zh:04a29ab348b367ff65bda325177aae682f3ff99c4cb52285976f0569fe6dfed0",
     "zh:1b9c5b248aff286be093c6e30d14a75d6c494df7e45ad47d2aa710114583cde5",
@@ -28,7 +31,10 @@ provider "registry.terraform.io/hashicorp/random" {
   version = "3.7.2"
   hashes = [
     "h1:0hcNr59VEJbhZYwuDE/ysmyTS0evkfcLarlni+zATPM=",
+<<<<<<< HEAD
     "h1:Def/iHM4HihJCIxQ8AYoxtoVL5lVlYx0V7bX91pxwgM=",
+=======
+>>>>>>> 8a93b39 (Initial commit)
     "zh:14829603a32e4bc4d05062f059e545a91e27ff033756b48afbae6b3c835f508f",
     "zh:1527fb07d9fea400d70e9e6eb4a2b918d5060d604749b6f1c361518e7da546dc",
     "zh:1e86bcd7ebec85ba336b423ba1db046aeaa3c0e5f921039b3f1a6fc2f978feab",
