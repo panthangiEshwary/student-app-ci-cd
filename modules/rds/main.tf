@@ -17,8 +17,8 @@ resource "random_id" "db_instance_suffix" {
 
 resource "aws_db_instance" "students_db" {
   identifier             = "students-db-${random_id.db_instance_suffix.hex}"
-  engine                 = "postgres"
-  engine_version         = "13.15"
+  engine                 = "mysql"
+  engine_version         = "8.0.35"
   instance_class         = "db.t3.micro"
   allocated_storage      = 20
   storage_type           = "gp2"
@@ -50,7 +50,7 @@ resource "aws_secretsmanager_secret_version" "db_credentials_version" {
   secret_string = jsonencode({
     username = var.db_master_username
     password = var.db_master_password
-    engine   = "postgres"
+    engine   = "mysql"
     host     = aws_db_instance.students_db.address
     port     = aws_db_instance.students_db.port
     dbname   = aws_db_instance.students_db.db_name

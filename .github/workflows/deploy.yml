@@ -3,7 +3,8 @@ name: Build and Deploy to AWS
 on:
   push:
     branches:
-      - main  # or master
+      - main
+  workflow_dispatch:  # This enables the manual "Run workflow" button
 
 env:
   AWS_REGION: us-east-1
