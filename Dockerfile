@@ -18,6 +18,7 @@ COPY app/templates/ templates/
 
 ENV FLASK_APP=student_app.py
 
+
 # Create and copy HTML files into the templates directory
 RUN mkdir -p templates
 COPY app/templates/index.html templates/
@@ -35,3 +36,7 @@ ENV DB_HOST="dummy_host" \
 
 # Start the Flask app using Gunicorn
 CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:8000", "student_app:app"]
+
+
+
+
