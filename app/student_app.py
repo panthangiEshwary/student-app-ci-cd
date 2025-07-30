@@ -33,6 +33,7 @@ def add_student():
         conn.commit()
         return jsonify({"message": "Student added"}), 201
     except Exception as e:
+        print("Error inserting student:", e)  # DEBUG LOG
         return jsonify({"error": str(e)}), 500
     finally:
         if cur:
