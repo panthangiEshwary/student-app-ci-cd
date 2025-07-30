@@ -33,7 +33,6 @@ def add_student():
         conn.commit()
         return jsonify({"message": "Student added"}), 201
     except Exception as e:
-        print("Error inserting student:", e)  # DEBUG LOG
         return jsonify({"error": str(e)}), 500
     finally:
         if cur:
@@ -43,6 +42,8 @@ def add_student():
 
 @app.route("/students", methods=["GET"])
 def get_students():
+    conn = None
+    cur = None
     try:
         conn = mysql.connector.connect(**db_config)
         cur = conn.cursor()
@@ -52,8 +53,10 @@ def get_students():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     finally:
-        cur.close()
-        conn.close()
+        if cur:
+            cur.close()
+        if conn:
+            conn.close()
 
 @app.route("/health", methods=["GET"])
 def health():
