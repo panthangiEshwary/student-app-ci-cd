@@ -4,6 +4,10 @@ import os
 
 app = Flask(__name__)
 
+@app.route("/")
+def home():
+    return "Student App is running"
+
 db_config = {
     'host': os.environ.get("DB_HOST"),
     'user': os.environ.get("DB_USER"),
