@@ -4,7 +4,6 @@ import os
 
 app = Flask(__name__)
 
-# Database config from environment variables
 db_config = {
     'host': os.environ.get("DB_HOST"),
     'user': os.environ.get("DB_USER"),
@@ -13,7 +12,6 @@ db_config = {
     'port': os.environ.get("DB_PORT", 5432)
 }
 
-# Connect to PostgreSQL
 def get_connection():
     return psycopg2.connect(**db_config)
 
@@ -47,4 +45,4 @@ def get_students():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)
