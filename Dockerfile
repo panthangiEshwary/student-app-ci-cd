@@ -12,16 +12,17 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 RUN apt-get update && apt-get install -y gcc
 
 # Copy dependencies file and install them
-COPY requirements.txt .
+COPY app/requirements.txt .
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 # Copy the application code
-COPY app.py .
+COPY app/app.py .
 
 # Create and copy HTML files into the templates directory
 RUN mkdir -p templates
-COPY templates/index.html templates/
-COPY templates/students.html templates/
+COPY app/templates/index.html templates/
+
+COPY app/templates/students.html templates/
 
 # Expose the port the app will run on
 EXPOSE 8000

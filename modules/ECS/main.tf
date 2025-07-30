@@ -48,7 +48,7 @@ resource "aws_ecs_task_definition" "student_app_task" {
 
   container_definitions = jsonencode([{
     name      = "student-app-container"
-    image     = "${var.ecr_repository_url}:latest"
+    image = "${var.ecr_repository_url}:latest"
     cpu       = 256
     memory    = 512
     essential = true

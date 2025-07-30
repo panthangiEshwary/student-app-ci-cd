@@ -10,3 +10,4 @@ resource "aws_ecr_repository" "student_app_repo" {
     Name = "student-app-repo"
   }
 }
+
