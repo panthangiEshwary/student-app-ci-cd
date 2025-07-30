@@ -44,34 +44,30 @@
         </form>
         <a href="students.html">View All Students</a>
     </div>
+     <script>
+        document.getElementById("studentForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const course = document.getElementById("course").value;
 
-    <script>
-         document.getElementById("studentForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const course = document.getElementById("course").value;
+            const res = await fetch("/add_student", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ name, email, course })
+            });
 
-    try {
-        const response = await fetch("/add_student", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, email, course })
+            const msg = document.getElementById("responseMsg");
+            if (res.ok) {
+                msg.innerText = "Student added successfully!";
+                document.getElementById("studentForm").reset();
+            } else {
+                const error = await res.json();
+                msg.innerText = "Failed to add student: " + (error.error || "Try again");
+            }
         });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            alert("Student added!");
-            this.reset();
-        } else {
-            alert("Failed to add student: " + (data.error || "Unknown error"));
-        }
-    } catch (err) {
-        alert("Error connecting to server.");
-        console.error(err);
-    }
-  });
-</script>
+    </script>
 </body>
 </html>
