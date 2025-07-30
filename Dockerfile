@@ -28,4 +28,6 @@ ENV DB_HOST="dummy_host" \
     DB_NAME="dummy_db"
 
 # Start the Flask app using Gunicorn
-CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:8000", "student_app:app"]
+#CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:8000", "student_app:app"]
+
+CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:8000", "app:app"]
