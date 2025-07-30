@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, render_template, request, jsonify
 import mysql.connector
 import os
 
@@ -14,11 +14,11 @@ db_config = {
 
 @app.route("/")
 def home():
-    return send_from_directory(".", "index.html")
+     return render_template("index.html")
 
 @app.route("/students.html")
 def student_page():
-    return send_from_directory(".", "students.html")
+    return render_template("students.html")
 
 @app.route("/add_student", methods=["POST"])
 def add_student():
