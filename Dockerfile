@@ -1,15 +1,12 @@
 # Use a lightweight official Python image
-FROM python:3.8-slim-buster
+FROM python:3.9-slim
 
 # Set working directory inside the container
 WORKDIR /app
 
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y gcc
-
 # Install dependencies
-RUN pip install flask mysql-connector-python
+RUN apt-get update && pip install flask mysql-connector-python
 
 # Copy dependencies file and install them
 COPY app/requirements.txt .
