@@ -23,6 +23,8 @@ def student_page():
 @app.route("/add_student", methods=["POST"])
 def add_student():
     data = request.get_json()
+    conn = None
+    cur = None
     try:
         conn = mysql.connector.connect(**db_config)
         cur = conn.cursor()
@@ -33,8 +35,10 @@ def add_student():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     finally:
-        cur.close()
-        conn.close()
+        if cur:
+            cur.close()
+        if conn:
+            conn.close()
 
 @app.route("/students", methods=["GET"])
 def get_students():
