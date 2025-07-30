@@ -16,12 +16,11 @@ COPY app/requirements.txt .
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 # Copy the application code
-COPY app/app.py .
+COPY student_app.py ./app.py
 
 # Create and copy HTML files into the templates directory
 RUN mkdir -p templates
 COPY app/templates/index.html templates/
-
 COPY app/templates/students.html templates/
 
 # Expose the port the app will run on
