@@ -46,21 +46,27 @@
     </div>
 
     <script>
-        document.getElementById("studentForm").addEventListener("submit", async function (e) {
-            e.preventDefault();
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const course = document.getElementById("course").value;
+       document.getElementById("studentForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const course = document.getElementById("course").value;
 
-            await fetch("/add_student", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, email, course })
-            });
-
-            alert("Student added!");
-            document.getElementById("studentForm").reset();
+    try {
+        const response = await fetch("/add_student", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, course })
         });
+
+        if (!response.ok) throw new Error('Failed to add student');
+        
+        alert("Student added!");
+        document.getElementById("studentForm").reset();
+    } catch (error) {
+        alert(`Error: ${error.message}`);
+    }
+});
     </script>
 </body>
 </html>

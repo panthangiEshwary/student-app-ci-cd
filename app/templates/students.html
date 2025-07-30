@@ -59,30 +59,30 @@
     </div>
 
     <script>
-    async function loadStudents() {
-        try {
-            const res = await fetch("/students");
-            if (!res.ok) throw new Error('Network response was not ok');
-            const data = await res.json();
-            console.log(data); // Check the data in console
-            const tbody = document.querySelector("#studentsTable tbody");
-            tbody.innerHTML = "";
-            data.forEach(s => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${s.id}</td>
-                        <td>${s.name}</td>
-                        <td>${s.email}</td>
-                        <td>${s.course}</td>
-                    </tr>
-                `;
-            });
-        } catch (error) {
-            console.error('Error loading students:', error);
-        }
+        async function loadStudents() {
+    try {
+        const res = await fetch("/students");
+        if (!res.ok) throw new Error('Failed to load students');
+        
+        const data = await res.json();
+        const tbody = document.querySelector("#studentsTable tbody");
+        tbody.innerHTML = "";
+        data.forEach(s => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${s.id}</td>
+                    <td>${s.name}</td>
+                    <td>${s.email}</td>
+                    <td>${s.course}</td>
+                </tr>
+            `;
+        });
+    } catch (error) {
+        console.error('Error loading students:', error);
     }
+}
 
-    loadStudents();
-</script>
+loadStudents();
+    </script>
 </body>
 </html>
